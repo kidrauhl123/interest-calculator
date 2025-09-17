@@ -196,13 +196,11 @@ function __gatherConfig(){
 // Embed mode: hide everything except the chart canvas
 (function __applyEmbedMode(){
   if (!__EMBED_MODE) return;
-  const keepIds = new Set(['chart']);
+  const chartEl = document.getElementById('chart');
+  if (!chartEl) return;
   document.querySelectorAll('body *').forEach(el => {
-    if (el.id && keepIds.has(el.id)) return;
-    // keep the ancestors of kept nodes
-    let keep = false, p = el;
-    while (p) { if (p.id && keepIds.has(p.id)) { keep = true; break; } p = p.parentElement; }
-    if (!keep) el.style.display = 'none';
+    if (el === chartEl || el.contains(chartEl)) return;
+    el.style.display = 'none';
   });
   document.body.style.margin = '0';
   document.body.className = '';
