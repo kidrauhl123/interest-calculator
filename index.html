@@ -383,6 +383,23 @@ window.addEventListener('load', () => {
                         }
                     },
                     plugins: {
+                        title: {
+                            display: typeof __EMBED_MODE !== 'undefined' && __EMBED_MODE,
+                            text: (function(){
+                                const principal = parseFloat(document.getElementById('principal').value) || 0;
+                                const ratePct = parseFloat(document.getElementById('rate').value) || 0;
+                                const compoundVal = parseInt(document.getElementById('compound').value) || 1;
+                                const pmtVal = parseFloat(document.getElementById('pmt').value) || 0;
+                                const compMap = {1: '每年', 4: '每季度', 12: '每月'};
+                                const compLabel = compMap[compoundVal] || (`每年 ${compoundVal} 次`);
+                                const fmt = (n)=> new Intl.NumberFormat('zh-CN', {minimumFractionDigits: 2, maximumFractionDigits: 2}).format(n);
+                                return `本金: ${fmt(principal)} 元 · 年化: ${fmt(ratePct)}% · 复利: ${compLabel} · 定投: ${fmt(pmtVal)} 元/期`;
+                            })(),
+                            align: 'start',
+                            color: 'rgb(55, 65, 81)',
+                            font: { size: 12, weight: '600' },
+                            padding: { top: 4, bottom: 8 }
+                        },
                         annotation: {
                             annotations: activeAnnotation ? [activeAnnotation] : []
                         },
@@ -474,6 +491,7 @@ window.addEventListener('load', () => {
 <script>
 // ===== Export Embed Link Button =====
 (function () {
+  if (typeof __EMBED_MODE !== 'undefined' && __EMBED_MODE) return;
   function $(id){ return document.getElementById(id); }
   function encodeCfg(cfg){ return btoa(encodeURIComponent(JSON.stringify(cfg))); }
   function gatherCfg(){
