@@ -1,7 +1,7 @@
 ### 📌 项目简介
 
 一个简单的 **定投复利计算器 + 可视化工具**，并用图表直观展示资金增长过程。
-
+链接 [interest-calculator-production-87dc.up.railway.app](https://interest-calculator-production-87dc.up.railway.app/)
 
 ### ✨ 这个项目的特点
 
